@@ -1,7 +1,9 @@
 simple-magento-vagrant
 ======================
 
-A VERY simple Magento environment provisioner for [Vagrant](http://www.vagrantup.com/). 
+A VERY simple Magento environment provisioner for [Vagrant](http://www.vagrantup.com/).
+
+![Magento & Vagrant](https://cookieflow.files.wordpress.com/2013/07/magento_vagrant.jpg?w=525&h=225)
 
 * Creates a running Magento development environment with a few simple commands.
 * Runs on Ubuntu (Precise 12.04 64 Bit) \w PHP 5.3, MySQL 5.5, Apache 2.2
