@@ -9,6 +9,7 @@ A VERY simple Magento environment provisioner for [Vagrant](http://www.vagrantup
 * Runs on Ubuntu (Precise 12.04 64 Bit) \w PHP 5.3, MySQL 5.5, Apache 2.2
 * Uses [Magento CE 1.8.1.0](http://www.magentocommerce.com/download)
 * Automatically runs Magento's installer and creates CMS admin account.
+* Automatically runs [n98-magerun](https://github.com/netz98/n98-magerun) installer. 
 * Perfect for rapid development or extension testing with an unopionionated, bare-bones and easily tweaked configuration.
 * Goes from naught-to-Magento in a couple of minutes.
 
@@ -37,7 +38,7 @@ Vagrant will configure the base system before downloading Magento and running th
 
 ## Todo
 * Expose MySQL port for access using Workbench or your preferred MySQL admin tool.
-* Install Modman and [n98-magerun](https://github.com/netz98/n98-magerun) utilities.
+* Install Modman.
 * Optionally install sample store inventory
 
 **Why no Puppet/Chef?**
