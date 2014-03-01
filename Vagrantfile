@@ -19,4 +19,13 @@ Vagrant.configure("2") do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network :forwarded_port, guest: 80, host: 8080
+
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--memory", "1024"]
+  end
+
+  config.vm.provision "shell", privileged: false, inline: "wget https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar"
+  config.vm.provision "shell", privileged: false, inline: "chmod +x ./n98-magerun.phar"
+  config.vm.provision "shell", inline: "mv ./n98-magerun.phar /usr/local/bin/"
+
 end
