@@ -74,3 +74,8 @@ if [ ! -f "/vagrant/httpdocs/app/etc/local.xml" ]; then
   --admin_lastname Owner --admin_firstname Store --admin_email "admin@example.com" \
   --admin_username admin --admin_password password123123
 fi
+
+cd /vagrant/httpdocs
+wget https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar
+chmod +x ./n98-magerun.phar
+sudo mv ./n98-magerun.phar /usr/local/bin/

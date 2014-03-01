@@ -24,8 +24,4 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--memory", "1024"]
   end
 
-  config.vm.provision "shell", privileged: false, inline: "wget https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar"
-  config.vm.provision "shell", privileged: false, inline: "chmod +x ./n98-magerun.phar"
-  config.vm.provision "shell", inline: "mv ./n98-magerun.phar /usr/local/bin/"
-
 end
