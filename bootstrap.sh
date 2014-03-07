@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-# Update
+# Add PHP 5.4 PPA
 # --------------------
 apt-get update
+apt-get install -y python-software-properties
+add-apt-repository ppa:ondrej/php5-oldstable
 
 # Install Apache & PHP
 # --------------------
@@ -69,6 +71,14 @@ if [ ! -f "/vagrant/httpdocs/index.php" ]; then
   rm -rf magento*
 fi
 
+# Install PHP 5.4 patch
+# --------------------
+if [ -f "/vagrant/httpdocs/index.php" ]; then
+  cd /vagrant/httpdocs
+  cp /vagrant/patches/PATCH_SUPEE-2619_EE_1.13.1.0_v1.sh .
+  sudo sh ./PATCH_SUPEE-2619_EE_1.13.1.0_v1.sh
+fi
+
 # Run installer
 if [ ! -f "/vagrant/httpdocs/app/etc/local.xml" ]; then
   cd /vagrant/httpdocs
@@ -82,6 +92,8 @@ if [ ! -f "/vagrant/httpdocs/app/etc/local.xml" ]; then
   --admin_username admin --admin_password password123123
 fi
 
+# Install n98-magerun
+# --------------------
 cd /vagrant/httpdocs
 wget https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar
 chmod +x ./n98-magerun.phar
