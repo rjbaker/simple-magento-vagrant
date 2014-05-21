@@ -53,8 +53,8 @@ mysql -u root -e "FLUSH PRIVILEGES"
 # Download and extract
 if [ ! -f "/vagrant/httpdocs/index.php" ]; then
   cd /vagrant/httpdocs
-  wget http://www.magentocommerce.com/downloads/assets/1.8.1.0/magento-1.8.1.0.tar.gz
-  tar -zxvf magento-1.8.1.0.tar.gz
+  wget http://www.magentocommerce.com/downloads/assets/1.9.0.1/magento-1.9.0.1.tar.gz
+  tar -zxvf magento-1.9.0.1.tar.gz
   mv magento/* magento/.htaccess .
   chmod -R o+w media var
   chmod o+w app/etc
