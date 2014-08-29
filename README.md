@@ -42,7 +42,4 @@ Vagrant will configure the base system before downloading Magento and running th
 * Optionally install sample store inventory
 
 **Why no Puppet/Chef?**
-Admittedly, Puppet and Chef are excellent solutions for predictable and documented system configurations. The emphasis for this provisioner is on unoptionated simplicity. There are some excellent Puppet / Chef Magento configurations on Github with far more bells and whistles.
-
-
-
+Admittedly, Puppet and Chef are excellent solutions for predictable and documented system configurations. The emphasis for this provisioner is on unopinionated simplicity. There are some excellent Puppet / Chef Magento configurations on Github with far more bells and whistles.
