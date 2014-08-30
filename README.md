@@ -7,7 +7,7 @@ A VERY simple Magento environment provisioner for [Vagrant](http://www.vagrantup
 
 * Creates a running Magento development environment with a few simple commands.
 * Runs on Ubuntu (Precise 12.04 64 Bit) \w PHP 5.3, MySQL 5.5, Apache 2.2
-* Uses [Magento CE 1.9.0.1](http://www.magentocommerce.com/download)
+* Uses [Magento CE 1.9.0.1](http://www.magentocommerce.com/download) or [provide your own](#provide-your-own-magento)
 * Automatically runs Magento's installer and creates CMS admin account.
 * Automatically runs [n98-magerun](https://github.com/netz98/n98-magerun) installer. 
 * Perfect for rapid development or extension testing with an unopionionated, bare-bones and easily tweaked configuration.
@@ -33,6 +33,10 @@ Vagrant will configure the base system before downloading Magento and running th
 * User: `admin` Password: `password123123`
 * Access the virtual machine directly using `vagrant ssh`
 * When you're done `vagrant halt`
+
+### Provide Your Own Magento
+
+If you put a file in the vagrant shared directory named 'magento.tar', the provisioner will use it instead of downloading Magento CE 1.9.0.1. For example, if you have an Enterprise Edition or other Magento you want to use, drop it in the directory before building and symlink it to magento.tar.
 
 [Full Vagrant command documentation](http://docs.vagrantup.com/v2/cli/index.html)
 
