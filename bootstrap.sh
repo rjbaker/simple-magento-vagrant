@@ -57,16 +57,25 @@ mysql -u root -e "FLUSH PRIVILEGES"
 # --------------------
 # http://www.magentocommerce.com/wiki/1_-_installation_and_configuration/installing_magento_via_shell_ssh
 
-# Download and extract
+## Download and extract
+
+# If there's a magento.tar in vagrant, use that.
+# Hint: Put a bunch of magentos in here and symlink the one you want
+#       to magento.tar. tar can figure out which decompressor to use.
+magefile=/vagrant/magento.tar
+
+# If there's no magento.tar in vagrant, fetch one and symlink it.
+if [ ! -f "$magefile" ] && cd /vagrant; then
+  mageurl='http://www.magentocommerce.com/downloads/assets/1.9.0.1/magento-1.9.0.1.tar.gz'
+	wget "$mageurl"
+	ln -s "${mageurl##*/}" magento.tar
+fi
+
 if [ ! -f "/vagrant/httpdocs/index.php" ]; then
   cd /vagrant/httpdocs
-  wget http://www.magentocommerce.com/downloads/assets/1.9.0.1/magento-1.9.0.1.tar.gz
-  tar -zxvf magento-1.9.0.1.tar.gz
-  mv magento/* magento/.htaccess .
+  tar --strip-components=1 -xf "$magefile"
   chmod -R o+w media var
   chmod o+w app/etc
-  # Clean up downloaded file and extracted dir
-  rm -rf magento*
 fi
 
 # Run installer
