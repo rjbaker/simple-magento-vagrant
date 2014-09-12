@@ -27,6 +27,13 @@ VHOST=$(cat <<EOF
     AllowOverride All
   </Directory>
 </VirtualHost>
+<VirtualHost *:8080>
+  DocumentRoot "/var/www"
+  ServerName localhost
+  <Directory "/var/www">
+    AllowOverride All
+  </Directory>
+</VirtualHost>
 EOF
 )
 
