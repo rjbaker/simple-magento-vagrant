@@ -4,7 +4,9 @@
 # --------------------
 apt-get update
 apt-get install -y python-software-properties
-add-apt-repository ppa:ondrej/php5-oldstable
+add-apt-repository ppa:ondrej/php5-oldstable -y
+apt-get update
+apt-get dist-upgrade
 
 # Install Apache & PHP
 # --------------------
@@ -69,14 +71,6 @@ if [ ! -f "/vagrant/httpdocs/index.php" ]; then
   chmod o+w app/etc
   # Clean up downloaded file and extracted dir
   rm -rf magento*
-fi
-
-# Install PHP 5.4 patch
-# --------------------
-if [ -f "/vagrant/httpdocs/index.php" ]; then
-  cd /vagrant/httpdocs
-  cp /vagrant/patches/PATCH_SUPEE-2619_EE_1.13.1.0_v1.sh .
-  sudo sh ./PATCH_SUPEE-2619_EE_1.13.1.0_v1.sh
 fi
 
 # Run installer
