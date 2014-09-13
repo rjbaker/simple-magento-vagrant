@@ -10,7 +10,6 @@ A VERY simple Magento environment provisioner for [Vagrant](http://www.vagrantup
 * Uses [Magento CE 1.9.0.1](http://www.magentocommerce.com/download)
 * Automatically runs Magento's installer and creates CMS admin account.
 * Automatically runs [n98-magerun](https://github.com/netz98/n98-magerun) installer.
-* Applies Magento PHP 5.4 patch update
 * Perfect for rapid development or extension testing with an unopionionated, bare-bones and easily tweaked configuration.
 * Goes from naught-to-Magento in a couple of minutes.
 
