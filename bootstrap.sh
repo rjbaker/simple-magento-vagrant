@@ -24,6 +24,8 @@ ln -fs /vagrant/httpdocs /var/www
 # Replace contents of default Apache vhost
 # --------------------
 VHOST=$(cat <<EOF
+NameVirtualHost *:8080
+Listen 8080
 <VirtualHost *:80>
   DocumentRoot "/var/www"
   ServerName localhost
