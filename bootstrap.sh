@@ -21,6 +21,15 @@ rm -rf /var/www
 mkdir /vagrant/httpdocs
 ln -fs /vagrant/httpdocs /var/www
 
+# Setting Apache user to vagrant (not secure for production environment)
+# --------------------
+sed -i 's/APACHE_RUN_USER=www-data/APACHE_RUN_USER=vagrant/' /etc/apache2/envvars
+sed -i 's/APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=vagrant/' /etc/apache2/envvars
+
+# Change Apache lock file dir owner
+# --------------------
+chown vagrant:vagrant /var/lock/apache2
+
 # Replace contents of default Apache vhost
 # --------------------
 VHOST=$(cat <<EOF
