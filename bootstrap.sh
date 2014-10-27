@@ -80,6 +80,16 @@ if [ ! -f "/vagrant/httpdocs/index.php" ]; then
   chmod o+w app/etc
   # Clean up downloaded file and extracted dir
   rm -rf magento*
+
+  # Download and install sample data
+  cd ~
+  wget http://www.magentocommerce.com/downloads/assets/1.9.0.0/magento-sample-data-1.9.0.0.tar.gz
+  tar -zxvf magento-sample-data-1.9.0.0.tar.gz
+  cd /vagrant/httpdocs/media
+  cp -R ~/magento-sample-data-1.9.0.0/media/* .
+  cd ../skin
+  cp -R ~/magento-sample-data-1.9.0.0/skin/* .
+  mysql -u root magentodb < ~/magento-sample-data-1.9.0.0/magento_sample_data_for_1.9.0.0.sql
 fi
 
 # Run installer
