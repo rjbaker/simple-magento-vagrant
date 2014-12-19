@@ -1,25 +1,19 @@
 #!/usr/bin/env bash
 
-# Add PHP 5.4 PPA
-# --------------------
-apt-get update
-apt-get install -y python-software-properties
-add-apt-repository ppa:ondrej/php5-oldstable -y
-apt-get update
-apt-get dist-upgrade
-
 # Install Apache & PHP
 # --------------------
 apt-get install -y apache2
 apt-get install -y php5
 apt-get install -y libapache2-mod-php5
-apt-get install -y php5-mysql php5-curl php5-gd php5-intl php-pear php5-imap php5-mcrypt php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php-apc
+apt-get install -y php5-mysqlnd php5-xdebug php5-gd php5-intl php-pear php5-imap php5-mcrypt php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php-soap
+
+php5enmod mcrypt
 
 # Delete default apache web dir and symlink mounted vagrant dir from host machine
 # --------------------
-rm -rf /var/www
+rm -rf /var/www/html
 mkdir /vagrant/httpdocs
-ln -fs /vagrant/httpdocs /var/www
+ln -fs /vagrant/httpdocs /var/www/html
 
 # Replace contents of default Apache vhost
 # --------------------
@@ -64,8 +58,8 @@ mysql -u root -e "FLUSH PRIVILEGES"
 # Download and extract
 if [ ! -f "/vagrant/httpdocs/index.php" ]; then
   cd /vagrant/httpdocs
-  wget http://www.magentocommerce.com/downloads/assets/1.9.0.1/magento-1.9.0.1.tar.gz
-  tar -zxvf magento-1.9.0.1.tar.gz
+  wget http://www.magentocommerce.com/downloads/assets/1.9.1.0/magento-1.9.1.0.tar.gz
+  tar -zxvf magento-1.9.1.0.tar.gz
   mv magento/* magento/.htaccess .
   chmod -R o+w media var
   chmod o+w app/etc
