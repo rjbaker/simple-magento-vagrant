@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+SAMPLE_DATA=$1
+MAGE_VERSION="1.9.0.1"
+DATA_VERSION="1.9.0.0"
+
 # Install Apache & PHP
 # --------------------
 apt-get install -y apache2
@@ -21,16 +25,16 @@ VHOST=$(cat <<EOF
 NameVirtualHost *:8080
 Listen 8080
 <VirtualHost *:80>
-  DocumentRoot "/var/www"
+  DocumentRoot "/var/www/html"
   ServerName localhost
   <Directory "/var/www">
     AllowOverride All
   </Directory>
 </VirtualHost>
 <VirtualHost *:8080>
-  DocumentRoot "/var/www"
+  DocumentRoot "/var/www/html"
   ServerName localhost
-  <Directory "/var/www">
+  <Directory "/var/www/html">
     AllowOverride All
   </Directory>
 </VirtualHost>
@@ -53,21 +57,40 @@ mysql -u root -e "CREATE DATABASE IF NOT EXISTS magentodb"
 mysql -u root -e "GRANT ALL PRIVILEGES ON magentodb.* TO 'magentouser'@'localhost' IDENTIFIED BY 'password'"
 mysql -u root -e "FLUSH PRIVILEGES"
 
+
 # Magento
 # --------------------
 # http://www.magentocommerce.com/wiki/1_-_installation_and_configuration/installing_magento_via_shell_ssh
 
 # Download and extract
-if [ ! -f "/vagrant/httpdocs/index.php" ]; then
+if [[ ! -f "/vagrant/httpdocs/index.php" ]]; then
   cd /vagrant/httpdocs
-  wget http://www.magentocommerce.com/downloads/assets/1.9.1.0/magento-1.9.1.0.tar.gz
-  tar -zxvf magento-1.9.1.0.tar.gz
+  wget http://www.magentocommerce.com/downloads/assets/${MAGE_VERSION}/magento-${MAGE_VERSION}.tar.gz
+  tar -zxvf magento-${MAGE_VERSION}.tar.gz
   mv magento/* magento/.htaccess .
   chmod -R o+w media var
   chmod o+w app/etc
   # Clean up downloaded file and extracted dir
   rm -rf magento*
 fi
+
+
+# Sample Data
+if [[ $SAMPLE_DATA == "true" ]] && ; then
+  cd /vagrant/httpdocs
+
+  if [[ ! -f "/vagrant/httpdocs/magento-sample-data-${DATA_VERSION}.tar.gz" ]]; then
+    # Only download sample data if we need to
+    wget http://www.magentocommerce.com/downloads/assets/${DATA_VERSION}/magento-sample-data-${DATA_VERSION}.tar.gz
+  fi
+
+  tar -zxvf magento-sample-data-${DATA_VERSION}.tar.gz
+  mv magento-sample-data-${DATA_VERSION}/media/* media/
+  mysql -h localhost -u magentouser -ppassword < magento-sample-data-${DATA_VERSION}/sample_data_for_${DATA_VERSION}.sql
+  /usr/local/bin/php -f shell/indexer.php reindexall
+  rm -rf magento-sample-data-${DATA_VERSION}
+fi
+
 
 # Run installer
 if [ ! -f "/vagrant/httpdocs/app/etc/local.xml" ]; then
