@@ -22,12 +22,10 @@ ln -fs /vagrant/httpdocs /var/www/html
 # Replace contents of default Apache vhost
 # --------------------
 VHOST=$(cat <<EOF
-NameVirtualHost *:8080
-Listen 8080
 <VirtualHost *:80>
   DocumentRoot "/var/www/html"
   ServerName localhost
-  <Directory "/var/www">
+  <Directory "/var/www/html">
     AllowOverride All
   </Directory>
 </VirtualHost>
@@ -41,7 +39,7 @@ Listen 8080
 EOF
 )
 
-echo "$VHOST" > /etc/apache2/sites-enabled/000-default
+echo "$VHOST" > /etc/apache2/sites-enabled/000-default.conf
 
 a2enmod rewrite
 service apache2 restart
@@ -76,18 +74,18 @@ fi
 
 
 # Sample Data
-if [[ $SAMPLE_DATA == "true" ]] && ; then
-  cd /vagrant/httpdocs
+if [[ $SAMPLE_DATA == "true" ]]; then
+  cd /vagrant
 
-  if [[ ! -f "/vagrant/httpdocs/magento-sample-data-${DATA_VERSION}.tar.gz" ]]; then
+  if [[ ! -f "/vagrant/magento-sample-data-${DATA_VERSION}.tar.gz" ]]; then
     # Only download sample data if we need to
     wget http://www.magentocommerce.com/downloads/assets/${DATA_VERSION}/magento-sample-data-${DATA_VERSION}.tar.gz
   fi
 
   tar -zxvf magento-sample-data-${DATA_VERSION}.tar.gz
-  mv magento-sample-data-${DATA_VERSION}/media/* media/
-  mysql -h localhost -u magentouser -ppassword < magento-sample-data-${DATA_VERSION}/sample_data_for_${DATA_VERSION}.sql
-  /usr/local/bin/php -f shell/indexer.php reindexall
+  cp -R magento-sample-data-${DATA_VERSION}/media/* httpdocs/media/
+  cp -R magento-sample-data-${DATA_VERSION}/skin/*  httpdocs/skin/
+  mysql -u root magentodb < magento-sample-data-${DATA_VERSION}/magento_sample_data_for_${DATA_VERSION}.sql
   rm -rf magento-sample-data-${DATA_VERSION}
 fi
 
@@ -103,6 +101,7 @@ if [ ! -f "/vagrant/httpdocs/app/etc/local.xml" ]; then
   --skip_url_validation yes \
   --admin_lastname Owner --admin_firstname Store --admin_email "admin@example.com" \
   --admin_username admin --admin_password password123123
+  /usr/bin/php -f shell/indexer.php reindexall
 fi
 
 # Install n98-magerun

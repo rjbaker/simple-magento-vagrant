@@ -1,5 +1,7 @@
 .vagrant
 package.box
+httpdocs
+magento-sample-data*.tar.gz
 
 # Numerous always-ignore extensions
 *.diff
