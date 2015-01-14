@@ -6,6 +6,8 @@ DATA_VERSION="1.9.0.0"
 
 # Install Apache & PHP
 # --------------------
+apt-get update -y
+apt-get install -y git
 apt-get install -y apache2
 apt-get install -y php5
 apt-get install -y libapache2-mod-php5
