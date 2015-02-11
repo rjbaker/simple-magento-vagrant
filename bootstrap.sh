@@ -111,13 +111,13 @@ fi
 # Install n98-magerun
 # --------------------
 cd /vagrant/httpdocs
-wget https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar
+wget "https://raw.githubusercontent.com/netz98/n98-magerun/master/n98-magerun.phar"
 chmod +x ./n98-magerun.phar
 sudo mv ./n98-magerun.phar /usr/local/bin/
 n98-magerun.phar dev:symlinks --on --global
 
 # Install modman
 # --------------------
-wget "https://raw.github.com/colinmollenhour/modman/master/modman"
+wget "https://raw.githubusercontent.com/colinmollenhour/modman/master/modman"
 chmod +x ./modman
 sudo mv ./modman /usr/local/bin/
