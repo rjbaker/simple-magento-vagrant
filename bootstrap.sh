@@ -108,16 +108,20 @@ if [ ! -f "/vagrant/httpdocs/app/etc/local.xml" ]; then
   /usr/bin/php -f shell/indexer.php reindexall
 fi
 
-# Install n98-magerun
+# Install n98-magerun and its bash-completion
 # --------------------
 cd /vagrant/httpdocs
 wget "https://raw.githubusercontent.com/netz98/n98-magerun/master/n98-magerun.phar"
+wget "https://raw.githubusercontent.com/netz98/n98-magerun/master/autocompletion/bash/bash_complete" -O "magerun-bash-completion"
 chmod +x ./n98-magerun.phar
 mv ./n98-magerun.phar /usr/local/bin/
+mv ./magerun-bash-completion /etc/bash_completion.d/n98-magerun.phar
 n98-magerun.phar dev:symlinks --on --global
 
-# Install modman
+# Install modman and its bash-completion
 # --------------------
 wget "https://raw.githubusercontent.com/colinmollenhour/modman/master/modman"
+wget "https://raw.githubusercontent.com/colinmollenhour/modman/master/bash_completion" -O "modman-bash-completion"
 chmod +x ./modman
 mv ./modman /usr/local/bin/
+mv ./modman-bash-completion /etc/bash_completion.d/modman
