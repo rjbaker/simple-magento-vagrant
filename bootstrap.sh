@@ -97,7 +97,7 @@ fi
 # Run installer
 if [ ! -f "/vagrant/httpdocs/app/etc/local.xml" ]; then
   cd /vagrant/httpdocs
-  sudo /usr/bin/php -f install.php -- --license_agreement_accepted yes \
+  /usr/bin/php -f install.php -- --license_agreement_accepted yes \
   --locale en_US --timezone "America/Los_Angeles" --default_currency USD \
   --db_host localhost --db_name magentodb --db_user magentouser --db_pass password \
   --url "http://127.0.0.1:8080/" --use_rewrites yes \
@@ -113,11 +113,11 @@ fi
 cd /vagrant/httpdocs
 wget "https://raw.githubusercontent.com/netz98/n98-magerun/master/n98-magerun.phar"
 chmod +x ./n98-magerun.phar
-sudo mv ./n98-magerun.phar /usr/local/bin/
+mv ./n98-magerun.phar /usr/local/bin/
 n98-magerun.phar dev:symlinks --on --global
 
 # Install modman
 # --------------------
 wget "https://raw.githubusercontent.com/colinmollenhour/modman/master/modman"
 chmod +x ./modman
-sudo mv ./modman /usr/local/bin/
+mv ./modman /usr/local/bin/
