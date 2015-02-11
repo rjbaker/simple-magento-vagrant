@@ -4,6 +4,10 @@ SAMPLE_DATA=$1
 MAGE_VERSION="1.9.1.0"
 DATA_VERSION="1.9.0.0"
 
+# Update Apt
+# --------------------
+apt-get update
+
 # Install Apache & PHP
 # --------------------
 apt-get install -y apache2
