@@ -23,6 +23,15 @@ rm -rf /var/www/html
 mkdir /vagrant/httpdocs
 ln -fs /vagrant/httpdocs /var/www/html
 
+# Setting Apache user to vagrant (not secure for production environment)
+# --------------------
+sed -i 's/APACHE_RUN_USER=www-data/APACHE_RUN_USER=vagrant/' /etc/apache2/envvars
+sed -i 's/APACHE_RUN_GROUP=www-data/APACHE_RUN_GROUP=vagrant/' /etc/apache2/envvars
+
+# Change Apache lock file dir owner
+# --------------------
+chown vagrant:vagrant /var/lock/apache2
+
 # Replace contents of default Apache vhost
 # --------------------
 VHOST=$(cat <<EOF
@@ -76,6 +85,16 @@ if [[ ! -f "/vagrant/httpdocs/index.php" ]]; then
   chmod o+w app/etc
   # Clean up downloaded file and extracted dir
   rm -rf magento*
+
+  # Download and install sample data
+  cd ~
+  wget http://www.magentocommerce.com/downloads/assets/1.9.0.0/magento-sample-data-1.9.0.0.tar.gz
+  tar -zxvf magento-sample-data-1.9.0.0.tar.gz
+  cd /vagrant/httpdocs/media
+  cp -R ~/magento-sample-data-1.9.0.0/media/* .
+  cd ../skin
+  cp -R ~/magento-sample-data-1.9.0.0/skin/* .
+  mysql -u root magentodb < ~/magento-sample-data-1.9.0.0/magento_sample_data_for_1.9.0.0.sql
 fi
 
 
