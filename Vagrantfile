@@ -12,6 +12,11 @@ Vagrant.configure("2") do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu/trusty64"
   
+  config.vm.provider "parallels" do |v, override|
+    override.vm.box = "parallels/ubuntu-14.04"
+    override.vm.box_url = "https://vagrantcloud.com/parallels/ubuntu-14.04"
+  end
+  
   config.vm.provision :shell, :path => "bootstrap.sh", :args => [sample_data]
 
   # Create a forwarded port mapping which allows access to a specific port
