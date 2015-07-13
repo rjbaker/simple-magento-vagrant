@@ -115,3 +115,10 @@ cd /vagrant/httpdocs
 wget --no-verbose https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar
 chmod +x ./n98-magerun.phar
 sudo mv ./n98-magerun.phar /usr/local/bin/
+
+# Install modman
+# --------------------
+cd /vagrant/httpdocs
+wget --no-verbose https://raw.githubusercontent.com/colinmollenhour/modman/master/modman
+chmod +x ./modman
+sudo mv ./modman /usr/local/bin/
