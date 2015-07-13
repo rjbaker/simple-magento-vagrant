@@ -64,7 +64,6 @@ mysql -u root -e "FLUSH PRIVILEGES"
 
 # Magento
 # --------------------
-# http://www.magentocommerce.com/wiki/1_-_installation_and_configuration/installing_magento_via_shell_ssh
 
 # Download and extract
 if [[ ! -f "/vagrant/httpdocs/index.php" ]]; then
