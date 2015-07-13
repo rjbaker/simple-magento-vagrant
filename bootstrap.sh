@@ -58,18 +58,17 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get -q -y install mysql-server-5.5
 
 mysql -u root -e "CREATE DATABASE IF NOT EXISTS magentodb"
-mysql -u root -e "GRANT ALL PRIVILEGES ON magentodb.* TO 'magentouser'@'localhost' IDENTIFIED BY 'password'"
+mysql -u root -e "GRANT ALL PRIVILEGES ON magentodb.* TO 'magentouser'@'%' IDENTIFIED BY 'password'"
 mysql -u root -e "FLUSH PRIVILEGES"
 
 
 # Magento
 # --------------------
-# http://www.magentocommerce.com/wiki/1_-_installation_and_configuration/installing_magento_via_shell_ssh
 
 # Download and extract
 if [[ ! -f "/vagrant/httpdocs/index.php" ]]; then
   cd /vagrant/httpdocs
-  wget http://www.magentocommerce.com/downloads/assets/${MAGE_VERSION}/magento-${MAGE_VERSION}.tar.gz
+  wget --no-verbose http://www.magentocommerce.com/downloads/assets/${MAGE_VERSION}/magento-${MAGE_VERSION}.tar.gz
   tar -zxvf magento-${MAGE_VERSION}.tar.gz
   mv magento/* magento/.htaccess .
   chmod -R o+w media var
@@ -113,6 +112,13 @@ fi
 # Install n98-magerun
 # --------------------
 cd /vagrant/httpdocs
-wget https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar
+wget --no-verbose https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar
 chmod +x ./n98-magerun.phar
 sudo mv ./n98-magerun.phar /usr/local/bin/
+
+# Install modman
+# --------------------
+cd /vagrant/httpdocs
+wget --no-verbose https://raw.githubusercontent.com/colinmollenhour/modman/master/modman
+chmod +x ./modman
+sudo mv ./modman /usr/local/bin/
