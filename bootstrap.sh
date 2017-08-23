@@ -71,7 +71,7 @@ mysql -u root -e "FLUSH PRIVILEGES"
 if [[ ! -f "/vagrant/httpdocs/index.php" ]]; then
   cd /vagrant/httpdocs
   wget https://github.com/OpenMage/magento-mirror/archive/${MAGE_VERSION}.tar.gz
-  tar -zxvf ${MAGE_VERSION}.tar.gz
+  tar -zxf ${MAGE_VERSION}.tar.gz
   mv magento-mirror-1.6.2.0/* magento-mirror-1.6.2.0/.htaccess .
   sed -i 's#<pdo_mysql/>#<pdo_mysql>1</pdo_mysql>#g' app/code/core/Mage/Install/etc/config.xml
   sudo apt-get -y remove php5-snmp
@@ -91,7 +91,7 @@ if [[ $SAMPLE_DATA == "true" ]]; then
     wget http://www.magentocommerce.com/downloads/assets/${DATA_VERSION}/magento-sample-data-${DATA_VERSION}.tar.gz
   fi
 
-  tar -zxvf magento-sample-data-${DATA_VERSION}.tar.gz
+  tar -zxf magento-sample-data-${DATA_VERSION}.tar.gz
   cp -R magento-sample-data-${DATA_VERSION}/media/* httpdocs/media/
   cp -R magento-sample-data-${DATA_VERSION}/skin/*  httpdocs/skin/
   mysql -u root magentodb < magento-sample-data-${DATA_VERSION}/magento_sample_data_for_${DATA_VERSION}.sql
