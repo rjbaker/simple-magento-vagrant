@@ -77,7 +77,7 @@ if [[ ! -f "/vagrant/httpdocs/index.php" ]]; then
     sudo cp ../assets/${MAGE_VERSION}.tar.gz .
   fi
   tar -zxf ${MAGE_VERSION}.tar.gz
-  mv magento-mirror-1.6.2.0/* magento-mirror-1.6.2.0/.htaccess .
+  mv magento-mirror-${MAGE_VERSION}/* magento-mirror-${MAGE_VERSION}/.htaccess .
   sed -i 's#<pdo_mysql/>#<pdo_mysql>1</pdo_mysql>#g' app/code/core/Mage/Install/etc/config.xml
   chmod -R o+w media var
   chmod o+w app/etc
