@@ -19,10 +19,10 @@ php5enmod mcrypt
 
 # Delete default apache web dir and symlink mounted vagrant dir from host machine
 # --------------------
-rm -rf /var/www/html
+rm -rf /var/www/magento
 sudo mkdir /vagrant
 sudo mkdir /vagrant/httpdocs
-ln -fs /vagrant/httpdocs /var/www/html
+ln -fs /vagrant/httpdocs /var/www/magento
 
 # Replace contents of default Apache vhost
 # --------------------
@@ -30,16 +30,16 @@ VHOST=$(cat <<EOF
 NameVirtualHost *:8080
 Listen 8080
 <VirtualHost *:80>
-  DocumentRoot "/var/www/html"
+  DocumentRoot "/var/www/magento"
   ServerName localhost
-  <Directory "/var/www/html">
+  <Directory "/var/www/magento">
     AllowOverride All
   </Directory>
 </VirtualHost>
 <VirtualHost *:8080>
-  DocumentRoot "/var/www/html"
+  DocumentRoot "/var/www/magento"
   ServerName localhost
-  <Directory "/var/www/html">
+  <Directory "/var/www/magento">
     AllowOverride All
   </Directory>
 </VirtualHost>
