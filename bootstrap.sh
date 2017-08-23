@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 SAMPLE_DATA=$1
-MAGE_VERSION="1.9.1.0"
-DATA_VERSION="1.9.0.0"
+MAGE_VERSION="1.6.2.0"
+DATA_VERSION="1.6.1.0"
 
 # Update Apt
 # --------------------
@@ -20,7 +20,8 @@ php5enmod mcrypt
 # Delete default apache web dir and symlink mounted vagrant dir from host machine
 # --------------------
 rm -rf /var/www/html
-mkdir /vagrant/httpdocs
+sudo mkdir /vagrant
+sudo mkdir /vagrant/httpdocs
 ln -fs /vagrant/httpdocs /var/www/html
 
 # Replace contents of default Apache vhost
@@ -69,9 +70,11 @@ mysql -u root -e "FLUSH PRIVILEGES"
 # Download and extract
 if [[ ! -f "/vagrant/httpdocs/index.php" ]]; then
   cd /vagrant/httpdocs
-  wget http://www.magentocommerce.com/downloads/assets/${MAGE_VERSION}/magento-${MAGE_VERSION}.tar.gz
-  tar -zxvf magento-${MAGE_VERSION}.tar.gz
-  mv magento/* magento/.htaccess .
+  wget https://github.com/OpenMage/magento-mirror/archive/${MAGE_VERSION}.tar.gz
+  tar -zxvf ${MAGE_VERSION}.tar.gz
+  mv magento-mirror-1.6.2.0/* magento-mirror-1.6.2.0/.htaccess .
+  sed -i 's#<pdo_mysql/>#<pdo_mysql>1</pdo_mysql>#g' app/code/core/Mage/Install/etc/config.xml
+  sudo apt-get -y remove php5-snmp
   chmod -R o+w media var
   chmod o+w app/etc
   # Clean up downloaded file and extracted dir
@@ -82,7 +85,7 @@ fi
 # Sample Data
 if [[ $SAMPLE_DATA == "true" ]]; then
   cd /vagrant
-
+  wget http://mirror.gunah.eu/magento/sample-data/magento-sample-data-${DATA_VERSION}.tar.gz
   if [[ ! -f "/vagrant/magento-sample-data-${DATA_VERSION}.tar.gz" ]]; then
     # Only download sample data if we need to
     wget http://www.magentocommerce.com/downloads/assets/${DATA_VERSION}/magento-sample-data-${DATA_VERSION}.tar.gz
@@ -95,18 +98,13 @@ if [[ $SAMPLE_DATA == "true" ]]; then
   rm -rf magento-sample-data-${DATA_VERSION}
 fi
 
+# Current project
+
 
 # Run installer
 if [ ! -f "/vagrant/httpdocs/app/etc/local.xml" ]; then
   cd /vagrant/httpdocs
-  sudo /usr/bin/php -f install.php -- --license_agreement_accepted yes \
-  --locale en_US --timezone "America/Los_Angeles" --default_currency USD \
-  --db_host localhost --db_name magentodb --db_user magentouser --db_pass password \
-  --url "http://127.0.0.1:8080/" --use_rewrites yes \
-  --use_secure no --secure_base_url "http://127.0.0.1:8080/" --use_secure_admin no \
-  --skip_url_validation yes \
-  --admin_lastname Owner --admin_firstname Store --admin_email "admin@example.com" \
-  --admin_username admin --admin_password password123123
+  sudo /usr/bin/php -f install.php -- --license_agreement_accepted yes --locale fr_FR --timezone "Europe/Paris" --default_currency EUR --db_host localhost --db_name magentodb --db_user magentouser --db_pass password --url "http://127.0.0.1:8080/" --use_rewrites yes --use_secure no --secure_base_url "http://127.0.0.1:8080/" --use_secure_admin no --skip_url_validation yes --admin_lastname Owner --admin_firstname Store --admin_email "admin@example.com" --admin_username admin --admin_password password123123
   /usr/bin/php -f shell/indexer.php reindexall
 fi
 

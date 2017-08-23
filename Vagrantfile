@@ -11,14 +11,15 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu/trusty64"
-  
+
   config.vm.provision :shell, :path => "bootstrap.sh", :args => [sample_data]
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network :forwarded_port, guest: 80, host: 8080
-  config.vm.synced_folder ".", "/vagrant", :mount_options => ["dmode=777","fmode=666"]
+  # config.vm.synced_folder ".", "/vagrafsdqfsdnt", :mount_options => ["dmode=777","fmode=666"]
+  config.vm.synced_folder '.', '/vagrant', disabled: true
 
   config.ssh.forward_agent = true
 
