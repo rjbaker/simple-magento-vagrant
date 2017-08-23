@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 SAMPLE_DATA=$1
-MAGE_VERSION="1.6.2.0"
-DATA_VERSION="1.6.1.0"
+MAGE_VERSION=$2
+DATA_VERSION=$3
 
 # Update Apt
 # --------------------

@@ -2,7 +2,9 @@
 # vi: set ft=ruby :
 
 # To install store sample data
-sample_data = "true"
+sample_data    = "true"
+mage_version   = "1.6.2.0"
+sample_version = "1.6.1.0"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
@@ -12,7 +14,7 @@ Vagrant.configure("2") do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu/trusty64"
 
-  config.vm.provision :shell, :path => "bootstrap.sh", :args => [sample_data]
+  config.vm.provision :shell, :path => "bootstrap.sh", :args => [sample_data, mage_version, sample_version]
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
