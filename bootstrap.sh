@@ -13,7 +13,7 @@ apt-get update
 apt-get install -y apache2
 apt-get install -y php5
 apt-get install -y libapache2-mod-php5
-apt-get install -y php5-mysqlnd php5-curl php5-xdebug php5-gd php5-intl php-pear php5-imap php5-mcrypt php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php-soap
+apt-get install -y php5-mysqlnd php5-curl php5-xdebug php5-gd php5-intl php-pear php5-imap php5-mcrypt php5-ming php5-ps php5-pspell php5-recode php5-sqlite php5-tidy php5-xmlrpc php5-xsl php-soap
 
 php5enmod mcrypt
 
@@ -74,7 +74,6 @@ if [[ ! -f "/vagrant/httpdocs/index.php" ]]; then
   tar -zxf ${MAGE_VERSION}.tar.gz
   mv magento-mirror-1.6.2.0/* magento-mirror-1.6.2.0/.htaccess .
   sed -i 's#<pdo_mysql/>#<pdo_mysql>1</pdo_mysql>#g' app/code/core/Mage/Install/etc/config.xml
-  sudo apt-get -y remove php5-snmp
   chmod -R o+w media var
   chmod o+w app/etc
   # Clean up downloaded file and extracted dir
