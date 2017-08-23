@@ -96,6 +96,7 @@ if [[ $SAMPLE_DATA == "true" ]]; then
   cp -R magento-sample-data-${DATA_VERSION}/skin/*  httpdocs/skin/
   mysql -u root magentodb < magento-sample-data-${DATA_VERSION}/magento_sample_data_for_${DATA_VERSION}.sql
   rm -rf magento-sample-data-${DATA_VERSION}
+  sudo chmod 777 -R httpdocs/media/
 fi
 
 # Current project
