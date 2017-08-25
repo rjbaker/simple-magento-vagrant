@@ -107,8 +107,6 @@ if [[ $SAMPLE_DATA == "true" ]]; then
   sudo chmod 777 -R httpdocs/media/
 fi
 
-# Current project
-
 
 # Run installer
 if [ ! -f "/vagrant/httpdocs/app/etc/local.xml" ]; then
@@ -119,7 +117,15 @@ fi
 
 # Install n98-magerun
 # --------------------
-cd /vagrant/httpdocs
-wget https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar
-chmod +x ./n98-magerun.phar
-sudo mv ./n98-magerun.phar /usr/local/bin/
+#cd /vagrant/httpdocs
+#wget https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar
+#chmod +x ./n98-magerun.phar
+#sudo mv ./n98-magerun.phar /usr/local/bin/
+
+
+# after install
+sudo cp -r /vagrant/code/* /vagrant/httpdocs/
+sudo chown -R www-data:www-data /vagrant/httpdocs/*
+sudo chown -R www-data:www-data /vagrant/httpdocs/.*
+sudo chmod -R 777 /vagrant/httpdocs/
+sudo rm -rf /vagrant/httpdocs/var/cache/*
