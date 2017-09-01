@@ -117,10 +117,10 @@ fi
 
 # Install n98-magerun
 # --------------------
-#cd /vagrant/httpdocs
-#wget https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar
-#chmod +x ./n98-magerun.phar
-#sudo mv ./n98-magerun.phar /usr/local/bin/
+cd /vagrant/httpdocs
+wget https://files.magerun.net/n98-magerun.phar
+chmod +x ./n98-magerun.phar
+sudo mv ./n98-magerun.phar /usr/local/bin/
 
 
 # after install
@@ -128,4 +128,5 @@ sudo cp -r /vagrant/code/* /vagrant/httpdocs/
 sudo chown -R www-data:www-data /vagrant/httpdocs/*
 sudo chown -R www-data:www-data /vagrant/httpdocs/.*
 sudo chmod -R 777 /vagrant/httpdocs/
+n98-magerun.phar  customer:create atr+client@atolcd.com password123 Antoine Trapet base
 sudo rm -rf /vagrant/httpdocs/var/cache/*
