@@ -128,5 +128,8 @@ sudo cp -r /vagrant/code/* /vagrant/httpdocs/
 sudo chown -R www-data:www-data /vagrant/httpdocs/*
 sudo chown -R www-data:www-data /vagrant/httpdocs/.*
 sudo chmod -R 777 /vagrant/httpdocs/
-n98-magerun.phar  customer:create atr+client@atolcd.com password123 Antoine Trapet base
+n98-magerun.phar customer:create atr+client@atolcd.com password123 Antoine Trapet base
+n98-magerun.phar dev:merge-js --on --global
+n98-magerun.phar dev:merge-css --on --global
+n98-magerun.phar dev:log --on --global
 sudo rm -rf /vagrant/httpdocs/var/cache/*
