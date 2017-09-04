@@ -132,4 +132,4 @@ n98-magerun.phar customer:create atr+client@atolcd.com password123 Antoine Trape
 n98-magerun.phar dev:merge-js --on --global
 n98-magerun.phar dev:merge-css --on --global
 n98-magerun.phar dev:log --on --global
-sudo rm -rf /vagrant/httpdocs/var/cache/*
+n98-magerun.phar cache:dir:flush
