@@ -1,7 +1,7 @@
 .vagrant
 package.box
 httpdocs
-assets
+assets/*
 
 # Numerous always-ignore extensions
 *.diff
