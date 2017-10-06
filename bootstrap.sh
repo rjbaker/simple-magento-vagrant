@@ -3,6 +3,7 @@
 SAMPLE_DATA=$1
 MAGE_VERSION=$2
 DATA_VERSION=$3
+DOMAIN_NAME=$4
 
 # Update Apt
 # --------------------
@@ -26,25 +27,15 @@ ln -fs /vagrant/httpdocs /var/www/magento
 
 # Replace contents of default Apache vhost
 # --------------------
-VHOST=$(cat <<EOF
-NameVirtualHost *:8080
-Listen 8080
+VHOST="NameVirtualHost *:80
 <VirtualHost *:80>
-  DocumentRoot "/var/www/magento"
-  ServerName localhost
-  <Directory "/var/www/magento">
+  DocumentRoot '/var/www/magento'
+  ServerName $DOMAIN_NAME.local
+  ServerAlias www.$DOMAIN_NAME.local
+  <Directory '/var/www/magento'>
     AllowOverride All
   </Directory>
-</VirtualHost>
-<VirtualHost *:8080>
-  DocumentRoot "/var/www/magento"
-  ServerName localhost
-  <Directory "/var/www/magento">
-    AllowOverride All
-  </Directory>
-</VirtualHost>
-EOF
-)
+</VirtualHost>"
 
 echo "$VHOST" > /etc/apache2/sites-enabled/000-default.conf
 
@@ -111,7 +102,7 @@ fi
 # Run installer
 if [ ! -f "/vagrant/httpdocs/app/etc/local.xml" ]; then
   cd /vagrant/httpdocs
-  sudo /usr/bin/php -f install.php -- --license_agreement_accepted yes --locale fr_FR --timezone "Europe/Paris" --default_currency EUR --db_host localhost --db_name magentodb --db_user magentouser --db_pass password --url "http://127.0.0.1:8080/" --use_rewrites yes --use_secure no --secure_base_url "http://127.0.0.1:8080/" --use_secure_admin no --skip_url_validation yes --admin_lastname Owner --admin_firstname Store --admin_email "admin@example.com" --admin_username admin --admin_password password123123
+  sudo /usr/bin/php -f install.php -- --license_agreement_accepted yes --locale fr_FR --timezone "Europe/Paris" --default_currency EUR --db_host localhost --db_name magentodb --db_user magentouser --db_pass password --url "http://"${DOMAIN_NAME}".local/" --use_rewrites yes --use_secure no --secure_base_url "http://"${DOMAIN_NAME}".local/" --use_secure_admin no --skip_url_validation yes --admin_lastname Owner --admin_firstname Store --admin_email "admin@example.com" --admin_username admin --admin_password password123123
   /usr/bin/php -f shell/indexer.php reindexall
 fi
 
